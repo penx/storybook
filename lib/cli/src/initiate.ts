@@ -35,6 +35,7 @@ import raxGenerator from './generators/RAX';
 import { warn } from './warn';
 import { JsPackageManagerFactory, readPackageJson } from './js-package-manager';
 import { NpmOptions } from './NpmOptions';
+import { litGenerator } from './generators/LIT';
 
 const logger = console;
 
@@ -232,6 +233,11 @@ const installStorybook = (projectType: ProjectType, options: CommandOptions): Pr
       case ProjectType.AURELIA:
         return aureliaGenerator(packageManager, npmOptions, generatorOptions)
           .then(commandLog('Adding Storybook support to your "Aurelia" app'))
+          .then(end);
+
+      case ProjectType.LIT:
+        return litGenerator(packageManager, npmOptions, generatorOptions)
+          .then(commandLog('Adding Storybook support to your "Lit" app'))
           .then(end);
 
       case ProjectType.UNSUPPORTED:
